@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initViews()
+        setupListeners()
         updateQuestion()
     }
 
@@ -41,5 +43,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateQuestion() {
         tvQuestion.text = questions[currentIndex].questionText
+    }
+
+    private fun setupListeners() {
+        btnTrue.setOnClickListener {
+            checkAnswer(true)
+        }
+
+        btnFalse.setOnClickListener {
+            checkAnswer(false)
+        }
+    }
+
+    private fun checkAnswer(userAnswer: Boolean) {
+        val correctAnswer = questions[currentIndex].answer
+
+        if (userAnswer == correctAnswer) {
+            score++
+        }
+
+        // Скрываем кнопки ответов
+        btnTrue.visibility = View.INVISIBLE
+        btnFalse.visibility = View.INVISIBLE
     }
 }
