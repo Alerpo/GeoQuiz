@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,6 +46,10 @@ class MainActivity : AppCompatActivity() {
         tvQuestion.text = questions[currentIndex].questionText
     }
 
+    private fun showResults() {
+                Toast.makeText(this, "Your score: $score/${questions.size}", Toast.LENGTH_LONG).show()
+    }
+
     private fun setupListeners() {
         btnTrue.setOnClickListener {
             checkAnswer(true)
@@ -52,6 +57,22 @@ class MainActivity : AppCompatActivity() {
 
         btnFalse.setOnClickListener {
             checkAnswer(false)
+        }
+
+        btnNext.setOnClickListener {
+            currentIndex++
+
+            if (currentIndex < questions.size) {
+                updateQuestion()
+                // Показываем кнопки ответов для следующего вопроса
+                btnTrue.visibility = View.VISIBLE
+                btnFalse.visibility = View.VISIBLE
+            } else {
+                // Последний вопрос - блокируем кнопку Next
+                btnNext.isEnabled = false
+                btnNext.visibility = View.INVISIBLE
+                showResults()
+            }
         }
     }
 
