@@ -1,20 +1,45 @@
 package com.example.geoquiz
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var tvQuestion: TextView
+    private lateinit var btnTrue: Button
+    private lateinit var btnFalse: Button
+    private lateinit var btnNext: Button
+
+    private val questions = arrayOf(
+        Question("Canberra is the capital of Australia.", true),
+        Question("The Pacific Ocean is larger than the Atlantic Ocean.", true),
+        Question("The Suez Canal connects the Red Sea and the Indian Ocean.", false),
+        Question("The source of the Nile River is in Egypt.", false),
+        Question("The Amazon River is the longest river in the Americas.", true),
+        Question("Lake Baikal is the world's oldest and deepest freshwater lake.", true)
+    )
+
+    private var currentIndex = 0
+    private var score = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        initViews()
+        updateQuestion()
+    }
+
+    private fun initViews() {
+        tvQuestion = findViewById(R.id.tvQuestion)
+        btnTrue = findViewById(R.id.btnTrue)
+        btnFalse = findViewById(R.id.btnFalse)
+        btnNext = findViewById(R.id.btnNext)
+    }
+
+    private fun updateQuestion() {
+        tvQuestion.text = questions[currentIndex].questionText
     }
 }
