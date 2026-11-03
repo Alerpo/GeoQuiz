@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         tvQuestion.text = questions[currentIndex].questionText
     }
 
-    private fun showResults() { sd
+    private fun showResults() { s
                 Toast.makeText(this, "Your score: $score/${questions.size}", Toast.LENGTH_LONG).show()
     }
 
