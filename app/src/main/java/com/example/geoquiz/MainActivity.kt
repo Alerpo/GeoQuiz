@@ -47,7 +47,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showResults() {
-                Toast.makeText(this, "Your score: $score/${questions.size}", Toast.LENGTH_LONG).show()
+        val percentage = (score.toDouble() / questions.size) * 100
+
+        val message = when {
+            percentage == 100.0 -> "Perfect! All answers correct!"
+            percentage >= 80.0 -> "Great job!"
+            percentage >= 60.0 -> "Good effort!"
+            else -> "Keep practicing!"
+        }
+
+        android.app.AlertDialog.Builder(this)
+            .setTitle("Quiz Completed!")
+            .setMessage("$message\n\nYour score: $score out of ${questions.size}\n($percentage%)")
+            .setPositiveButton("Play Again") { _, _ ->
+                restartQuiz()
+            }
+            .setNegativeButton("Exit") { _, _ ->
+                finish()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun restartQuiz() {
+        currentIndex = 0
+        score = 0
+        btnTrue.visibility = View.VISIBLE
+        btnFalse.visibility = View.VISIBLE
+        btnNext.isEnabled = true
+        btnNext.visibility = View.VISIBLE
+        updateQuestion()
     }
 
     private fun setupListeners() {
